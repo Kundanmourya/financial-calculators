@@ -16,4 +16,14 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.js', // make sure PostCSS is used
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          recharts: ['recharts'],
+          lucide: ['lucide-react']
+        }
+      }
+    }
+  }
 });
