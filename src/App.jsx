@@ -123,7 +123,8 @@ const FinanceCalculator = () => {
   const PPFCalculator = () => {
     const [yearly, setYearly] = useState(50000);
     const [years, setYears] = useState(15);
-    const rate = 7.1;
+    const [rate, setRate] = useState(7.1);
+    // const rate = 7.1;
     
     let totalInvestment = yearly * years;
     let maturityValue = 0;
@@ -152,7 +153,7 @@ const FinanceCalculator = () => {
     
     return (
       <div className="space-y-6">
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-2">Yearly Investment (₹)</label>
             <input type="number" value={yearly} onChange={(e) => setYearly(Number(e.target.value))} className="w-full p-2 border rounded-lg" min="500" max="150000" step="1000" />
@@ -160,6 +161,22 @@ const FinanceCalculator = () => {
           <div>
             <label className="block text-sm font-medium mb-2">Time Period (Years)</label>
             <input type="number" value={years} onChange={(e) => setYears(Number(e.target.value))} className="w-full p-2 border rounded-lg" min="15" max="50" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Expected Rate of Interest (%)</label>
+            <input type="number" value={rate} onChange = {(e) =>{
+              const value = e.target.value;
+              if (value === '' || /^[0-9]*\.?[0-9]*$/.test(value)) {
+                setRate(value);
+              }
+            }}
+            onBlur={() => {
+              let numericValue = parseFloat(rate);
+              if (isNaN(numericValue) || numericValue < 2) numericValue = 2;
+              if (numericValue > 30) numericValue = 30;
+              setRate(numericValue);
+            }}
+            className="w-full p-2 border rounded-lg" min="2" max="30" step="0.1" />
           </div>
         </div>
         
